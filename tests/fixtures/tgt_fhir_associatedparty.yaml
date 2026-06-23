@@ -1,0 +1,12 @@
+- name: Ann Holmes
+  role: general_contact
+  associated_party_practitioner_id: null
+  associated_party_practitioner_role_id: null
+  associated_party_institution_id: Organization-Vanderbilt University Medical Center
+  id: io4dxgvNTQ66go0eHr_c_g
+- name: Robert Carroll
+  role: primary_investigator
+  associated_party_practitioner_id: null
+  associated_party_practitioner_role_id: null
+  associated_party_institution_id: Organization-Vanderbilt University Medical Center
+  id: ynR9Fo5VRAaOVuTxQSZU0w
