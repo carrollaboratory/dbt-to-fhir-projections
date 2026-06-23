@@ -1,0 +1,28 @@
+{
+  "resourceType": "Group",
+  "meta": {
+    "profile": [
+      "https://nih-ncpi.github.io/ncpi-fhir-ig-2/StructureDefinition/research-study-group"
+    ]
+  },
+  "type": "person",
+  "actual": true,
+  "code": {
+    "coding": [ {
+            "code": "NCIT:C142710",
+            "display": "Study Participant",
+            "system": "http://purl.obolibrary.org/obo/ncit.owl"
+        }
+    ]
+  },
+  "member": [
+    {%- for rs in research_subjects -%}
+      {
+        "entity": {
+          "reference": "Patient/{{ rs.participant_id }}"
+        }
+      }{% if not loop.last %},{%endif %}
+      {%- endfor -%}
+  ],
+  "quantity": {{ research_subjects | count }}
+}

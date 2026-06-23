@@ -1,0 +1,16 @@
+{
+  "resourceType": "ResearchSubject",
+  "id": "{{research_subject.research_subject_id}}",
+  "meta": {
+    "profile": [
+      "https://nih-ncpi.github.io/ncpi-fhir-ig-2/StructureDefinition/ncpi-Study-Participant"
+    ]
+  },
+  "study": {
+    "reference": "ResearchStudy/{{research_subject.research_study_id}}"
+  },
+  "individual": {
+    "reference": "Patient/{{research_subject.participant_id}}"
+  },
+  "status": "on-study"
+}

@@ -1,0 +1,35 @@
+{%- set sex=util.harmony(participant.birthsex, local_system='birthsex', first_only=True) -%}
+{
+  "resourceType": "Patient",
+  "id": "{{participant.participant_id}}",
+  "meta": {
+    "profile": [
+      "https://nih-ncpi.github.io/ncpi-fhir-ig-2/StructureDefinition/ncpi-participant"
+    ]
+  },
+  "extension": [
+    {%- if sex -%}
+    {
+        "url": "http://terminology.hl7.org/CodeSystem/v3-AdministrativeGender",
+        "valueCode": "{{sex.code}}",
+        "value": "{{participant.sex}}"
+    },
+    {%- endif -%}
+    {% for race in participant.race %}
+      {
+        {%- set coding=util.harmony(race, 'race', first_only=True) -%}
+        "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race",
+        "extension": [
+            {
+                "url": "ombCategory",
+                "valueCoding": {{coding | tojson}}
+            },
+            {
+                "url": "text",
+                "valueString": "{{participant.race}}"
+            }
+        ]
+      }
+      {%- endfor -%}
+    ]
+}
