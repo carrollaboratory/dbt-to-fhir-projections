@@ -1,0 +1,56 @@
+{#
+ # Basic FHIR Coding as an object
+ #}
+{% macro coding(code, display=None, system=None) -%}
+{
+  {%- set final_system=system -%}
+  {%- if not system and ":" in code -%}
+      {%- set parts=code.split(":", 1) -%}
+      {%- set final_system=SYSTEMS.get(parts[0], parts[0]) -%}
+  {%- endif -%}
+  "code": "{{ code }}",
+  "system": "{{ final_system }}"{% if display %},
+  "display": "{{ display }}"{% endif %}
+}
+{%- endmacro %}
+
+{%- macro get_system(code, system=None) -%}
+{%- if not system and ":" in code -%}
+    {%- set parts=code.split(":", 1) -%}
+    {%- set system=SYSTEMS.get(parts[0], parts[0]) -%}
+{%- endif -%}
+{%- endmacro -%}
+
+{#
+ # CodeableConcept with the optional text value
+ #}
+{% macro codeableconcept(text=None) -%}
+{
+  "coding": [
+    {%- for coding_args in varargs %}
+      {{ coding(*coding_args) }}{{ "," if not loop.last }}
+    {%- endfor %}
+  ]
+  {%- if text %}, "text": "{{ text }}"{% endif %}
+}
+{%- endmacro %}
+
+{#
+ # Return the harmonized responses a list of codings
+ #}
+{% macro harmonize(code, local_system, first_only=False) -%}
+    {%- if code -%}
+        {%- set codings = HARMONIZE.harmonize(code, local_system) -%}
+        {%- if codings -%}
+            {#- Slice the list to just the first item if first_only is true #}
+            {%- set target_codings = codings[:1] if first_only else codings -%}
+            {%- for coding in target_codings -%}
+                {
+                    "system": "{{ coding.system }}",
+                    "code": "{{ coding.code }}",
+                    "display": "{{ coding.display }}"
+                }{{- "," if not loop.last -}}
+            {%- endfor -%}
+        {%- endif -%}
+    {%- endif -%}
+{%- endmacro -%}

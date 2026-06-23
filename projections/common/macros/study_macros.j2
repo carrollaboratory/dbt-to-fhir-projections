@@ -1,0 +1,12 @@
+{% macro render_related_artifacts(artifacts=None) -%}
+  {%- if artifacts and artifacts is iterable and artifacts | length > 0 -%}
+"relatedArtifact": [
+    {%- set fragments = [] -%}
+    {%- for item in artifacts -%}
+      {%- set obj = '{"type": "documentation", "display": ' ~ (item | tojson) ~ '}' -%}
+      {%- set _ = fragments.append(obj) -%}
+    {%- endfor -%}
+    {{ fragments | join(',\n  ') }}
+],
+    {%- endif -%}
+{%- endmacro %}
