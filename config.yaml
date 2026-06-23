@@ -1,0 +1,44 @@
+---
+db:
+  local:
+    uri: sqlite:///moomoo.db
+    # This only makes sense for PGSQL and DuckDB, not SQLITE
+    db_schema_name:
+  table_name_template: tgt_fhir_{}
+data_model:
+  import_path: kfi_fhir_input.kfi_fhir_input
+
+  model_helpers:
+    access_policy:
+      classname: AccessPolicy
+    study:
+      classname: ResearchStudy
+      blacklist:
+        - participant
+    subject:
+      classname: Participant
+      blacklist:
+        - researchstudy
+    StudyMembership:
+      backrefs:
+        ResearchSubject:
+          fk: study_membership_id
+          varname: research_subjects
+
+harmony: data/harmony.csv
+projection:
+  templates: projections/common
+  curie_mappings:
+    HP: http://purl.obolibrary.org/obo/hp.owl
+    MONDO: http://purl.obolibrary.org/obo/mondo.owl
+    MAXO: http://purl.obolibrary.org/obo/maxo.owl
+    NCIT: http://purl.obolibrary.org/obo/ncit.owl
+    SNOMED: http://snomed.info/sct
+    SYMP: https://purl.obolibrary.org/obo/symp.owl
+    LNC: https://loinc.org/
+    MEDDRA: https://www.meddra.org
+    MESH: https://www.nlm.nih.gov/mesh
+    UCUM: http://unitsofmeasure.org
+    OMIT: http://purl.obolibrary.org/obo/omit.owl
+    MIM: https://omim.org/
+    CDREC: http://terminology.hl7.org/NamingSystem/CDCREC

@@ -1,0 +1,22 @@
+- research_study_id: sd-7hwpqzc2yr
+  study_title: Madamoiselle Moo's Marvelous Research Study
+  parent_study_id: null
+  description:
+    This project aims to exist for the main purpose of helping the INCLUDE
+    DCC with data ingestion into the portal by serving as a test study with all relevant
+    parts of the INCLUDE data model.
+  study_status: active
+  access_policy_id: co-ajdm9fyxxz
+  study_focus:
+    - MSH:D012417 # Rumen
+  study_condition:
+    - MSH:D008414 # Mastitis, Bovine
+  study_acknowledgement:
+    - "Some sort of acknowledgement"
+  study_design:
+    - SEVCO:01029 # Clinical trial     http://hl7.org/fhir/study-design
+- research_study_id: sd-3e9jep7pyc
+  study_title: HTP
+  description: htp
+  study_status: active
+  access_policy_id: co-ajdm9fyxxz

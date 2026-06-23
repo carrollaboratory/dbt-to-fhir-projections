@@ -1,0 +1,71 @@
+{
+  "resourceType": "Consent",
+  "id": "{{access_policy.access_policy_id}}",
+  "meta": {
+    "profile": [
+      "https://nih-ncpi.github.io/ncpi-fhir-ig-2/StructureDefinition/ncpi-research-access-policy"
+    ]
+  },
+  "status": "{{util.harmony(access_policy.status, 'status')[0].code}}",
+  "scope": {
+    "coding": [{
+      "code": "research",
+      "system": "http://terminology.hl7.org/CodeSystem/consentscope"
+    }]
+  },
+  "category": [
+    {
+      "coding": {{ util.harmony(access_policy.consent_scope, 'consent_scope') | tojson}}
+    }
+  ],
+  "policyRule" : {
+    "coding" : [
+      {
+        "system" : "http://terminology.hl7.org/CodeSystem/consentpolicycodes",
+        "code" : "cric"
+      }
+    ]
+  },
+  "provision" : {
+     "type" : "permit",
+     {%- if access_policy.period_start -%}
+     "period": {
+       {%- if access_policy.period_end -%}
+       "start": "{{access_policy_start}}",
+       "end": "{{access_policy.policy_end}}"
+       {%- else -%}
+       "start": "{{access_policy.period_start}}"
+       {%- endif %}
+     }
+     {%- endif -%}
+     "purpose" : [
+       {%- for dat in access_policy.access_policy_code -%}
+         {# EST 2026-6-15 - I am pretty sure we'll never need mutiple mappings
+          # for the same policy code. If we do, this will not go well, since
+          # they'll all get mashed together into a single, unstructured list
+          #}
+         {{ util.harmony(dat, 'access_policy_code', first_only=True) | tojson}}
+       {%- endfor -%}
+    ]
+    },
+   "extension": [
+     {%- if access_policy.description -%}
+     {
+        "url": "https://nih-ncpi.github.io/ncpi-fhir-ig-2/StructureDefinition/access-policy-description",
+        "valueMarkdown": "{{access_policy.description}}"
+     },
+     {%- endif -%}
+     {%- if access_policy.website -%}
+     {
+        "url": "https://nih-ncpi.github.io/ncpi-fhir-ig-2/StructureDefinition/research-web-link",
+        "valueUrl": "{{access_policy.website}}"
+     },
+     {%- endif -%}
+     {
+       "url": "https://nih-ncpi.github.io/ncpi-fhir-ig-2/StructureDefinition/access-type",
+       "valueCodeableConcept": {
+         "coding": {{ util.harmony(access_policy.data_access_type, 'data_access_type') | tojson}}
+       }
+     }
+  ]
+}

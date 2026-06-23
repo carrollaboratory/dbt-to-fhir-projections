@@ -1,0 +1,18 @@
+- access_policy_id: co-ajdm9fyxxz
+  description: General Research Use
+  data_access_type: open
+  website: https://carrollaboratory.github.io/kfi-fhir-input/elements/website/
+  consent_scope: research
+  disease_limitation: null
+  status: active
+  period_start: null
+  period_end: null
+- access_policy_id: co-t869rg8xx6
+  description: General Research Use
+  data_access_type: open
+  website: https://carrollaboratory.github.io/kfi-fhir-input/elements/website/2
+  consent_scope: research
+  disease_limitation: MSH:D012919 "Social Behavior"
+  status: active
+  period_start: null
+  period_end: null

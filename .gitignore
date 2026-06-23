@@ -1,6 +1,7 @@
 # Local miscellany
 .envrc
 .bash_history_local
+/scratch
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
