@@ -1,0 +1,30 @@
+{%- import "macros/codeable_concept.j2" as concept -%}
+{%- import "macros/study_macros.j2" as study_macros -%}
+{
+  "resourceType": "ResearchStudy",
+  "id": "{{research_study.research_study_id}}",
+  "meta": {
+    "profile": [
+      "https://nih-ncpi.github.io/ncpi-fhir-ig-2/StructureDefinition/ncpi-research-study"
+    ]
+  },
+  "identifier": [{
+    "system": "https://dewrangle.com/includedcc/identifiers",
+    "value": "{{research_study.research_study_id}}"
+    }],
+  "title": "{{research_study.title}}",
+  "status": "{{research_study.study_status}}",
+  "description": "{{research_study.description}}",
+  {{ '"partOf": [{"reference": "ResearchStudy/' ~ research_study.parent_study_id ~ '"}],' if research_study.parent_study_id }}
+  {{study_macros.render_related_artifacts(research_study.study_acknowledgement)}}
+  "category": [
+    {
+    "coding": [
+        {{concept.coding(
+           code="StudyCohort",
+           display="Study Cohort",
+           system="https://nih-ncpi.github.io/ncpi-fhir-ig-2/CodeSystem/ncpi"
+        )}}
+      ]
+  }]
+}
