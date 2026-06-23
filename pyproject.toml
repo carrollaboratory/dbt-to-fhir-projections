@@ -1,49 +1,35 @@
 [build-system]
-requires = [
-    "setuptools>=61.0",
-    "setuptools_scm"
-]
+requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
-
 
 [project]
 name = "dbt-to-fhir-projections"
+version = "0.1.0"
 authors = [
   { name = "Eric Torstenson", email = "eric.s.torstenson@vumc.org" },
-  { name = "Yelena Cox", email="yelena.cox@vumc.org"}
+  { name = "Yelena Cox", email = "yelena.cox@vumc.org" }
 ]
 description = "Projections and tests for base FHIR extraction from the DBT data warehouse"
 readme = "README.md"
 requires-python = ">=3.13"
-
-dynamic = ["version"]
-
 classifiers = [
-    "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3",
 ]
-
 dependencies = [
   "linkml>=1.9.1",
   "PyYAML",
-  'piper @ git+https://github.com/carrollaboratory/piper'
-  "sqlalchemy",
+  "piper @ git+https://github.com/carrollaboratory/piper",
+  "kfi-fhir-input @ https://github.com/carrollaboratory/kfi-fhir-input/releases/download/v0.9.4/kfi_fhir_input-0.9.4-py3-none-any.whl",
+  "sqlalchemy"
 ]
-# In your projects, you will use something like the following to install the appropriate
-# data model
-# "acr-harmonized-data-model @ https://github.com/anvilproject/acr-harmonized-data-model/releases/download/main/acr_harmonized_data_model-0.0.0.post156.dev0+025cbe1-py3-none-any.whl"
+
 [project.optional-dependencies]
 dev = [
-    "rich",
-    "pytest",
-    "pytest-env",
-    "pytest-ordering"
+  "rich",
+  "pytest",
+  "pytest-env",
+  "pytest-ordering"
 ]
 
-[tool.setuptools_scm]
-
-
-[tool.setuptools.packages.find]
-where = ["tests"]
-
-[project.scripts]
-eltest = "eltest"
+[tool.setuptools]
+packages = []
